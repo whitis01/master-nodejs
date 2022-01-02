@@ -17,6 +17,12 @@ var fs = require('fs');
 var StringDecoder = require('string_decoder').StringDecoder;
 // Pull in the current environment via the config.js file (in this directory).
 var config = require('./config.js');
+// Pull in the route handlers
+var handlers = require('./lib/handlers');
+// Pull in our helper methods
+var helpValidate = require('./lib/helpers').parseJsonToObject;
+
+var _data = require('./lib/data');
 
 // Instantiate the HTTP server
 var httpServer = http.createServer((req, res) => {
@@ -60,24 +66,22 @@ var unifiedServer = (req, res) => {
     var bufferStream = '';
     // This is an event called ondata. When it executes, place the data in the string via callback function.
     // This function is not called if data is empty.
+
     req.on('data', (data) => {
         bufferStream = bufferStream + decoder.write(data);
     });
     // This is an event called onend. This will always be called, whether there is data or not.
     req.on('end', () => {
         bufferStream = bufferStream + decoder.end();
-
         var chosenHandler = typeof(router[trimmedPath]) !== "undefined" ? router[trimmedPath] : handlers.notFound;
-
         // Construct the data object to send to the handler.
         var data = {
             'trimmedPath' : trimmedPath,
             'queryString' : queryString,
             'method'  : method,
             'headers' : headers,
-            'payload' : bufferStream,
+            'payload' : helpValidate(bufferStream),
         }
-
         // Call the chosen handler and route the request.
         chosenHandler(data, (statusCode, payload) => {
             // Use the status code called back by the handler or default to 200.
@@ -129,28 +133,10 @@ httpsServer.listen(config.httpsPort, () => {
     logger('The server is listening on I love you ' + config.httpsPort + ' in ' + config.envName + ' mode.');
 });
 
-// Define request handlers.
-var handlers = {};
-handlers.home = (data, callback) => {
-    // Callback should return a HTTP Code and a payload.
-    callback(200, { 'name' : 'Isaac' });
-};
-
-// A ping route
-handlers.hitMeh = (data, callback) => {
-    // Simple response to allow user to know they hit this route.
-    callback(200, { 'Dear Client' : 'You Rang?' });
-};
-
-// Default fallback if no url can be matched.
-handlers.notFound = (data, callback) => {
-    callback(404);
-};
-
-
 // Define a request router.
 var router = {
     'home'    : handlers.home,
     'hit-meh' : handlers.hitMeh,
     'ping' : handlers.hitMeh,
+    'users' : handlers.users,
 };

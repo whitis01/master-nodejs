@@ -17,6 +17,7 @@ environments.staging = {
     'httpPort'      : '3000',
     'httpsPort' : '3443',
     'envName'   : 'staging',
+    'hashingSecret' : 'Isaac',
 };
 
 // Production environment.
@@ -24,6 +25,7 @@ environments.production = {
     'httpPort'  : '5001',
     'httpsPort' : '5443',
     'envName'   : 'production',
+    'hashingSecret' : 'White',
 };
 
 // Determine which environment was passed via a command-line argument.
