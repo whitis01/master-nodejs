@@ -1,0 +1,8 @@
+node_api:
+  container_name: node_api
+  build: .
+  ports:
+    - "3000:3000"
+    - "3443:3443"
+  volumes:
+    - .:/app
