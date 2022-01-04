@@ -10,7 +10,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
 RUN mkdir /app
 WORKDIR /app
 COPY . /app
-RUN ls -al
+RUN mkdir -p ./.data/users
 
 LABEL maintainer="Isaac A. White <whitis01@gmail.com>" \
       version="1.0"
