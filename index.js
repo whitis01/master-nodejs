@@ -1,6 +1,7 @@
 /**
  *  Primary file for the API
  *  @author - Isaac A. White
+ *  This is the access point for the API we are writing.
  */
 
 // Dependencies
