@@ -140,4 +140,5 @@ var router = {
     'hit-meh' : handlers.hitMeh,
     'ping' : handlers.hitMeh,
     'users' : handlers.users,
+    'tokens' : handlers.tokens,
 };
