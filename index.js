@@ -2,6 +2,7 @@
  *  Primary file for the API
  *  @author - Isaac A. White
  *  This is the access point for the API we are writing.
+ *  Eventually we will be building a CLI off of this.
  */
 
 // Dependencies
