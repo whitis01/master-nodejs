@@ -31,7 +31,6 @@ var httpServer = http.createServer((req, res) => {
     unifiedServer(req,res);
 });
 
-
 // Create a server option to pull in the server key.
 var httpsServerOptions = {
     'key'  : fs.readFileSync('./https/key.pem'),
