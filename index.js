@@ -26,6 +26,8 @@ var helpValidate = require('./lib/helpers').parseJsonToObject;
 
 var _data = require('./lib/data');
 
+// Functional Execution of the App.
+
 // Instantiate the HTTP server
 var httpServer = http.createServer((req, res) => {
     unifiedServer(req,res);
